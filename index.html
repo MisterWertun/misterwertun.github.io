@@ -3,54 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Экология Судиславля</title>
+    <title>PlantAI - Определитель растений</title>
     <style>
-        body { font-family: -apple-system, sans-serif; line-height: 1.7; max-width: 750px; margin: 0 auto; padding: 20px; background: #0f1a0f; color: #e0e0e0; }
-        header { text-align: center; padding: 40px 0; border-bottom: 1px solid #2a4a2a; }
+        body { font-family: -apple-system, sans-serif; line-height: 1.6; max-width: 750px; margin: 0 auto; padding: 20px; background: #0a1a0a; color: #e0e0e0; }
+        header { text-align: center; padding: 30px 0; border-bottom: 1px solid #2a4a2a; }
         h1 { color: #4ade80; margin-bottom: 10px; }
-        h2 { color: #86efac; }
-        .card { background: #1a2e1a; padding: 24px; border-radius: 12px; margin: 20px 0; border: 1px solid #2a4a2a; }
-        .tag { display: inline-block; background: #22c55e; color: #000; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
-        .cta { display: inline-block; background: #4ade80; color: #000; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 12px; }
-        .cta:hover { background: #22c55e; }
+        .upload-box { background: #1a2e1a; border: 2px dashed #4ade80; border-radius: 16px; padding: 40px 20px; text-align: center; margin: 30px 0; cursor: pointer; transition: 0.3s; }
+        .upload-box:hover { background: #1f3a1f; }
+        .upload-box input { display: none; }
+        .upload-icon { font-size: 48px; margin-bottom: 10px; }
+        .btn { display: inline-block; background: #4ade80; color: #000; padding: 12px 24px; border-radius: 8px; font-weight: bold; border: none; font-size: 16px; cursor: pointer; margin-top: 15px; }
+        .btn:hover { background: #22c55e; }
+        .result { display: none; background: #1a2e1a; padding: 20px; border-radius: 12px; border: 1px solid #4ade80; margin-top: 20px; animation: fadeIn 0.5s; }
+        .result h2 { color: #4ade80; margin-top: 0; }
+        .preview { max-width: 100%; max-height: 300px; border-radius: 8px; margin-top: 15px; display: none; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         footer { text-align: center; color: #888; padding: 40px 0; font-size: 14px; }
-        .fact { background: #0f1a0f; border-left: 4px solid #4ade80; padding: 15px; margin: 15px 0; font-style: italic; }
     </style>
 </head>
 <body>
     <header>
-        <h1>🌍 Экология Судиславля</h1>
-        <p>Как сделать наш район чище. Проект по биологии.</p>
+        <h1>🌿 PlantAI</h1>
+        <p>Интеллектуальный определитель растений по фото</p>
     </header>
 
-    <div class="card">
-        <div class="tag">♻️ Раздельный сбор</div>
-        <h2>Почему это важно?</h2>
-        <p>Мусор на свалках разлагается десятилетиями. Пластиковая бутылка — 450 лет, стеклянная — более 1000 лет. Раздельный сбор позволяет отправить эти материалы на переработку, а не закапывать в землю.</p>
+    <div class="upload-box" onclick="document.getElementById('fileInput').click();">
+        <div class="upload-icon">📸</div>
+        <p>Нажми, чтобы выбрать фото растения</p>
+        <input type="file" id="fileInput" accept="image/*" onchange="previewImage(event)">
+        <img id="preview" class="preview" alt="Превью">
     </div>
 
-    <div class="card">
-        <div class="tag">🔍 Что куда сдавать?</div>
-        <h2>Памятка для жителей</h2>
-        <ul>
-            <li><strong>Пластик (бутылки, флаконы):</strong> сполосните, сомните, сдайте в специальные сетки.</li>
-            <li><strong>Стекло:</strong> банки и бутылки (без крышек) — в контейнеры для стекла.</li>
-            <li><strong>Бумага и картон:</strong> сложите в отдельную коробку или контейнер.</li>
-            <li><strong>Батарейки:</strong> НИ В КОЕМ СЛУЧАЕ не в обычный мусор! Сдавайте в пункты приема (часто стоят в магазинах).</li>
-        </ul>
+    <div style="text-align: center;">
+        <button class="btn" onclick="analyzePlant()">🔍 Определить растение</button>
     </div>
 
-    <div class="fact">
-        💡 <strong>Факт:</strong> В Судиславском районе в последние годы обновили контейнерные площадки. Раздельный сбор — это следующий шаг к чистому району.
+    <div id="resultBox" class="result">
+        <h2>Результат анализа</h2>
+        <p><strong>Вероятное растение:</strong> <span id="plantName">...</span></p>
+        <p><strong>Семейство:</strong> <span id="plantFamily">...</span></p>
+        <p><strong>Условия роста:</strong> <span id="plantHabitat">...</span></p>
+        <p style="font-size: 12px; color: #888; margin-top: 15px;">* Это демо-версия. В финальном проекте здесь будет работать нейросеть.</p>
     </div>
 
-    <div class="card">
-        <div class="tag">🎯 Тест</div>
-        <h2>Проверь себя</h2>
-        <p>Сколько лет разлагается обычный полиэтиленовый пакет?</p>
-        <a href="#" class="cta" onclick="alert('Правильный ответ: от 100 до 400 лет! Поэтому лучше использовать тканевые сумки.'); return false;">Узнать ответ</a>
-    </div>
+    <footer>© 2025 · Школьный проект по биологии · IT-разработка</footer>
 
-    <footer>© 2025 · Проект по биологии · Судиславль</footer>
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function analyzePlant() {
+            const resultBox = document.getElementById('resultBox');
+            const plantName = document.getElementById('plantName');
+            const plantFamily = document.getElementById('plantFamily');
+            const plantHabitat = document.getElementById('plantHabitat');
+
+            // Показываем загрузку
+            resultBox.style.display = 'block';
+            plantName.textContent = 'Анализ...';
+            plantFamily.textContent = '...';
+            plantHabitat.textContent = '...';
+
+            // Имитация работы ИИ (задержка 1.5 секунды)
+            setTimeout(() => {
+                plantName.textContent = 'Одуванчик лекарственный (Taraxacum officinale)';
+                plantFamily.textContent = 'Астровые (Asteraceae)';
+                plantHabitat.textContent = 'Луга, поляны, обочины дорог. Цветет весной и летом.';
+            }, 1500);
+        }
+    </script>
 </body>
 </html>
