@@ -105,7 +105,7 @@
                     resultList.innerHTML = '';
                     data.results.slice(0, 3).forEach(item => {
                         const li = document.createElement('li');
-                        const score = Math.round(item.score * 100
+                        const score = Math.round(item.score * 100);
                         const commonName = item.species.commonNames && item.species.commonNames.length > 0 ? item.species.commonNames[0] : 'Русское название не найдено';
             li.innerHTML = `<strong>${commonName}</strong><br>(лат. <em>${item.species.scientificNameWithoutAuthor}</em>)<br><span style="color:#86efac; font-size: 14px;">Совпадение: ${score}%</span>`;
                         resultList.appendChild(li);
