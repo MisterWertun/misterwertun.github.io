@@ -176,7 +176,6 @@
 
     <div style="text-align: center;">
         <button class="btn" id="analyzeBtn" onclick="analyzePlant()">🔍 Определить растение</button>
-        <button id="voiceToggle" class="btn" style="background: transparent; color: #4ade80; border: 2px solid #4ade80; box-shadow: none; margin-top: 10px;" onclick="toggleVoice()">🔇 Голос выключен</button>
     </div>
 
     <div id="resultBox" class="result">
@@ -191,25 +190,8 @@
 
     <script>
         let selectedFile = null;
-        let isVoiceEnabled = false;
-
-        function toggleVoice() {
-            isVoiceEnabled = !isVoiceEnabled;
-            const btn = document.getElementById('voiceToggle');
-            if (isVoiceEnabled) {
-                btn.innerHTML = '🔊 Голос включен';
-                btn.style.background = 'rgba(74, 222, 128, 0.2)';
-                btn.style.color = '#4ade80';
-            } else {
-                btn.innerHTML = '🔇 Голос выключен';
-                btn.style.background = 'transparent';
-                btn.style.color = '#4ade80';
-                window.speechSynthesis.cancel();
-            }
-        }
 
         function speakPlant(name) {
-            if (!isVoiceEnabled) return;
             window.speechSynthesis.cancel();
             const text = `Растение определено. Это ${name}.`;
             const utterance = new SpeechSynthesisUtterance(text);
@@ -275,11 +257,14 @@
                         const commonName = item.species.commonNames && item.species.commonNames.length > 0 ? item.species.commonNames[0] : 'Русское название не найдено';
                         
                         li.innerHTML = `<strong>${commonName}</strong><br>(лат. <em>${item.species.scientificNameWithoutAuthor}</em>)<br><span style="color:#86efac; font-size: 14px;">Совпадение: ${score}%</span>`;
-                        resultList.appendChild(li);
                         
-                        if (item === data.results[0]) {
-                            speakPlant(commonName);
-                        }
+                        const speakBtn = document.createElement('button');
+                        speakBtn.innerHTML = '🔊 Озвучить';
+                        speakBtn.style.cssText = 'margin-top: 8px; margin-bottom: 10px; background: #4ade80; color: #000; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; display: block;';
+                        speakBtn.onclick = function() { speakPlant(commonName); };
+                        
+                        li.appendChild(speakBtn);
+                        resultList.appendChild(li);
                     });
                     resultBox.style.display = 'block';
                 } else {
