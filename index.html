@@ -18,147 +18,45 @@
             min-height: 100vh;
         }
         
-        header { 
-            text-align: center; 
-            padding: 40px 0; 
-            margin-bottom: 20px;
-        }
-        
-        h1 { 
-            color: #4ade80; 
-            margin-bottom: 10px; 
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            text-shadow: 0 4px 15px rgba(74, 222, 128, 0.2);
-        }
-        
-        p.subtitle {
-            color: #86efac;
-            font-size: 16px;
-        }
+        header { text-align: center; padding: 40px 0; margin-bottom: 20px; }
+        h1 { color: #4ade80; margin-bottom: 10px; font-size: 32px; font-weight: 800; letter-spacing: -1px; text-shadow: 0 4px 15px rgba(74, 222, 128, 0.2); }
+        p.subtitle { color: #86efac; font-size: 16px; }
 
         .upload-box { 
-            background: rgba(26, 46, 26, 0.6); 
-            border: 2px dashed #4ade80; 
-            border-radius: 20px; 
-            padding: 40px 20px; 
-            text-align: center; 
-            margin: 30px 0; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            background: rgba(26, 46, 26, 0.6); border: 2px dashed #4ade80; border-radius: 20px; 
+            padding: 40px 20px; text-align: center; margin: 30px 0; cursor: pointer; 
+            transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px);
         }
-        
-        .upload-box:hover { 
-            background: rgba(31, 58, 31, 0.8); 
-            transform: translateY(-2px);
-        }
-        
+        .upload-box:hover { background: rgba(31, 58, 31, 0.8); transform: translateY(-2px); }
         .upload-box input { display: none; }
-        
-        .upload-icon { 
-            font-size: 48px; 
-            margin-bottom: 15px; 
-            filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.4));
-        }
+        .upload-icon { font-size: 48px; margin-bottom: 15px; filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.4)); }
         
         .btn { 
-            display: inline-block; 
-            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); 
-            color: #000; 
-            padding: 16px 24px; 
-            border-radius: 12px; 
-            font-weight: 600; 
-            border: none; 
-            font-size: 16px; 
-            cursor: pointer; 
-            margin-top: 15px; 
-            width: 100%; 
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+            display: inline-block; background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); 
+            color: #000; padding: 16px 24px; border-radius: 12px; font-weight: 600; 
+            border: none; font-size: 16px; cursor: pointer; margin-top: 15px; width: 100%; 
+            transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
         }
-        
-        .btn:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn:disabled { 
-            background: #333; 
-            color: #666;
-            cursor: not-allowed; 
-            box-shadow: none;
-            transform: none;
-        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4); }
+        .btn:active { transform: translateY(0); }
+        .btn:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; transform: none; }
         
         .result { 
-            display: none; 
-            background: rgba(26, 46, 26, 0.8); 
-            padding: 25px; 
-            border-radius: 20px; 
-            border: 1px solid rgba(74, 222, 128, 0.3); 
-            margin-top: 30px; 
-            animation: fadeIn 0.6s ease-out; 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
+            display: none; background: rgba(26, 46, 26, 0.8); padding: 25px; border-radius: 20px; 
+            border: 1px solid rgba(74, 222, 128, 0.3); margin-top: 30px; 
+            animation: fadeIn 0.6s ease-out; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px);
         }
-        
-        .result h2 { 
-            color: #4ade80; 
-            margin-top: 0; 
-            font-weight: 800;
-            border-bottom: 1px solid rgba(74, 222, 128, 0.2);
-            padding-bottom: 10px;
-        }
-        
+        .result h2 { color: #4ade80; margin-top: 0; font-weight: 800; border-bottom: 1px solid rgba(74, 222, 128, 0.2); padding-bottom: 10px; }
         .result ul { padding-left: 20px; }
+        .result li { margin-bottom: 15px; font-size: 18px; }
+        .result li strong { color: #fff; }
+        .result li em { color: #86efac; }
         
-        .result li { 
-            margin-bottom: 15px; 
-            font-size: 18px;
-        }
-
-        .result li strong {
-            color: #fff;
-        }
-
-        .result li em {
-            color: #86efac;
-        }
+        .preview { max-width: 100%; max-height: 300px; border-radius: 12px; margin-top: 15px; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .error { color: #f87171; margin-top: 15px; font-weight: 600; text-align: center; }
         
-        .preview { 
-            max-width: 100%; 
-            max-height: 300px; 
-            border-radius: 12px; 
-            margin-top: 15px; 
-            display: none; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-        
-        .error { 
-            color: #f87171; 
-            margin-top: 15px; 
-            font-weight: 600;
-            text-align: center;
-        }
-        
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(10px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-        
-        footer { 
-            text-align: center; 
-            color: #555; 
-            padding: 40px 0 20px 0; 
-            font-size: 14px; 
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        footer { text-align: center; color: #555; padding: 40px 0 20px 0; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -176,26 +74,37 @@
 
     <div style="text-align: center;">
         <button class="btn" id="analyzeBtn" onclick="analyzePlant()">🔍 Определить растение</button>
+        <button id="voiceToggle" class="btn" style="background: transparent; color: #4ade80; border: 2px solid #4ade80; box-shadow: none; margin-top: 10px;" onclick="toggleVoice()">🔇 Голос выключен</button>
     </div>
 
     <div id="resultBox" class="result">
         <h2>Результат анализа</h2>
         <ul id="resultList"></ul>
-        
-        <!-- Новая кнопка озвучки -->
-        <button id="globalSpeakBtn" class="btn" style="display: none; background: transparent; border: 2px solid #4ade80; color: #4ade80; box-shadow: none;" onclick="if(window.topPlantName) speakPlant(window.topPlantName)">🔊 Озвучить результат</button>
-        
         <p style="font-size: 12px; color: #888; margin-top: 20px; text-align: center;">* Результаты предоставлены нейросетью Pl@ntNet.</p>
     </div>
     
     <div id="errorBox" class="error"></div>
-
     <footer>© 2026</footer>
 
     <script>
         let selectedFile = null;
+        let isVoiceEnabled = false;
+
+        function toggleVoice() {
+            isVoiceEnabled = !isVoiceEnabled;
+            const btn = document.getElementById('voiceToggle');
+            if (isVoiceEnabled) {
+                btn.innerHTML = '🔊 Голос включен';
+                btn.style.background = 'rgba(74, 222, 128, 0.2)';
+            } else {
+                btn.innerHTML = '🔇 Голос выключен';
+                btn.style.background = 'transparent';
+                window.speechSynthesis.cancel();
+            }
+        }
 
         function speakPlant(name) {
+            if (!isVoiceEnabled) return;
             window.speechSynthesis.cancel();
             const text = `Растение определено. Это ${name}.`;
             const utterance = new SpeechSynthesisUtterance(text);
@@ -231,13 +140,11 @@
             const resultBox = document.getElementById('resultBox');
             const resultList = document.getElementById('resultList');
             const errorBox = document.getElementById('errorBox');
-            const globalSpeakBtn = document.getElementById('globalSpeakBtn');
 
             btn.disabled = true;
             btn.textContent = 'Анализ... (ждем ИИ)';
             resultBox.style.display = 'none';
             errorBox.textContent = '';
-            window.topPlantName = null; // Сбрасываем старое название
 
             const formData = new FormData();
             formData.append('image', selectedFile);
@@ -251,9 +158,7 @@
 
                 const data = await response.json();
 
-                if (!response.ok) {
-                    throw new Error(data.error || 'Ошибка сервера');
-                }
+                if (!response.ok) throw new Error(data.error || 'Ошибка сервера');
 
                 if (data.results && data.results.length > 0) {
                     resultList.innerHTML = '';
@@ -265,13 +170,12 @@
                         li.innerHTML = `<strong>${commonName}</strong><br>(лат. <em>${item.species.scientificNameWithoutAuthor}</em>)<br><span style="color:#86efac; font-size: 14px;">Совпадение: ${score}%</span>`;
                         resultList.appendChild(li);
 
-                        // Запоминаем первое (самое точное) растение для озвучки
-                        if (index === 0) {
-                            window.topPlantName = commonName;
+                        // Озвучиваем только первый результат, если голос включен
+                        if (index === 0 && isVoiceEnabled) {
+                            speakPlant(commonName);
                         }
                     });
                     resultBox.style.display = 'block';
-                    globalSpeakBtn.style.display = 'block'; // Показываем кнопку озвучки
                 } else {
                     errorBox.textContent = 'Не удалось распознать растение. Попробуй другое фото.';
                 }
