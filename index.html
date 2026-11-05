@@ -5,30 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlantAI - Определитель растений</title>
     <style>
-        body { font-family: -apple-system, sans-serif; line-height: 1.6; max-width: 750px; margin: 0 auto; padding: 20px; background: #0a1a0a; color: #e0e0e0; }
-        header { text-align: center; padding: 30px 0; border-bottom: 1px solid #2a4a2a; }
-        h1 { color: #4ade80; margin-bottom: 10px; }
-        .upload-box { background: #1a2e1a; border: 2px dashed #4ade80; border-radius: 16px; padding: 40px 20px; text-align: center; margin: 30px 0; cursor: pointer; transition: 0.3s; }
-        .upload-box:hover { background: #1f3a1f; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            line-height: 1.6; 
+            max-width: 750px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #051005 0%, #0a1a0a 100%); 
+            color: #e0e0e0; 
+            min-height: 100vh;
+        }
+        
+        header { 
+            text-align: center; 
+            padding: 40px 0; 
+            margin-bottom: 20px;
+        }
+        
+        h1 { 
+            color: #4ade80; 
+            margin-bottom: 10px; 
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 15px rgba(74, 222, 128, 0.2);
+        }
+        
+        p.subtitle {
+            color: #86efac;
+            font-size: 16px;
+        }
+
+        .upload-box { 
+            background: rgba(26, 46, 26, 0.6); 
+            border: 2px dashed #4ade80; 
+            border-radius: 20px; 
+            padding: 40px 20px; 
+            text-align: center; 
+            margin: 30px 0; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .upload-box:hover { 
+            background: rgba(31, 58, 31, 0.8); 
+            transform: translateY(-2px);
+        }
+        
         .upload-box input { display: none; }
-        .upload-icon { font-size: 48px; margin-bottom: 10px; }
-        .btn { display: inline-block; background: #4ade80; color: #000; padding: 12px 24px; border-radius: 8px; font-weight: bold; border: none; font-size: 16px; cursor: pointer; margin-top: 15px; width: 100%; }
-        .btn:hover { background: #22c55e; }
-        .btn:disabled { background: #555; cursor: not-allowed; }
-        .result { display: none; background: #1a2e1a; padding: 20px; border-radius: 12px; border: 1px solid #4ade80; margin-top: 20px; animation: fadeIn 0.5s; }
-        .result h2 { color: #4ade80; margin-top: 0; }
+        
+        .upload-icon { 
+            font-size: 48px; 
+            margin-bottom: 15px; 
+            filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.4));
+        }
+        
+        .btn { 
+            display: inline-block; 
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); 
+            color: #000; 
+            padding: 16px 24px; 
+            border-radius: 12px; 
+            font-weight: 600; 
+            border: none; 
+            font-size: 16px; 
+            cursor: pointer; 
+            margin-top: 15px; 
+            width: 100%; 
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+        
+        .btn:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled { 
+            background: #333; 
+            color: #666;
+            cursor: not-allowed; 
+            box-shadow: none;
+            transform: none;
+        }
+        
+        .result { 
+            display: none; 
+            background: rgba(26, 46, 26, 0.8); 
+            padding: 25px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(74, 222, 128, 0.3); 
+            margin-top: 30px; 
+            animation: fadeIn 0.6s ease-out; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+        
+        .result h2 { 
+            color: #4ade80; 
+            margin-top: 0; 
+            font-weight: 800;
+            border-bottom: 1px solid rgba(74, 222, 128, 0.2);
+            padding-bottom: 10px;
+        }
+        
         .result ul { padding-left: 20px; }
-        .result li { margin-bottom: 10px; }
-        .preview { max-width: 100%; max-height: 300px; border-radius: 8px; margin-top: 15px; display: none; }
-        .error { color: #ef4444; margin-top: 10px; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        footer { text-align: center; color: #888; padding: 40px 0; font-size: 14px; }
+        
+        .result li { 
+            margin-bottom: 15px; 
+            font-size: 18px;
+        }
+
+        .result li strong {
+            color: #fff;
+        }
+
+        .result li em {
+            color: #86efac;
+        }
+        
+        .preview { 
+            max-width: 100%; 
+            max-height: 300px; 
+            border-radius: 12px; 
+            margin-top: 15px; 
+            display: none; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        
+        .error { 
+            color: #f87171; 
+            margin-top: 15px; 
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        footer { 
+            text-align: center; 
+            color: #555; 
+            padding: 40px 0 20px 0; 
+            font-size: 14px; 
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>🌿 PlantAI</h1>
-        <p>Интеллектуальный определитель растений по фото</p>
+        <p class="subtitle">Интеллектуальный определитель растений</p>
     </header>
 
     <div class="upload-box" onclick="document.getElementById('fileInput').click();">
@@ -40,20 +176,50 @@
 
     <div style="text-align: center;">
         <button class="btn" id="analyzeBtn" onclick="analyzePlant()">🔍 Определить растение</button>
+        <button id="voiceToggle" class="btn" style="background: transparent; color: #4ade80; border: 2px solid #4ade80; box-shadow: none; margin-top: 10px;" onclick="toggleVoice()">🔇 Голос выключен</button>
     </div>
 
     <div id="resultBox" class="result">
         <h2>Результат анализа</h2>
         <ul id="resultList"></ul>
-        <p style="font-size: 12px; color: #888; margin-top: 15px;">* Результаты предоставлены нейросетью Pl@ntNet.</p>
+        <p style="font-size: 12px; color: #888; margin-top: 20px; text-align: center;">* Результаты предоставлены нейросетью Pl@ntNet.</p>
     </div>
     
-    <div id="errorBox" class="error" style="text-align: center;"></div>
+    <div id="errorBox" class="error"></div>
 
     <footer>© 2026</footer>
 
     <script>
         let selectedFile = null;
+        let isVoiceEnabled = false;
+
+        function toggleVoice() {
+            isVoiceEnabled = !isVoiceEnabled;
+            const btn = document.getElementById('voiceToggle');
+            if (isVoiceEnabled) {
+                btn.innerHTML = '🔊 Голос включен';
+                btn.style.background = 'rgba(74, 222, 128, 0.2)';
+                btn.style.color = '#4ade80';
+            } else {
+                btn.innerHTML = '🔇 Голос выключен';
+                btn.style.background = 'transparent';
+                btn.style.color = '#4ade80';
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function speakPlant(name) {
+            if (!isVoiceEnabled) return;
+            window.speechSynthesis.cancel();
+            const text = `Растение определено. Это ${name}.`;
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voices = window.speechSynthesis.getVoices();
+            const ruVoice = voices.find(v => v.lang.includes('ru'));
+            if (ruVoice) utterance.voice = ruVoice;
+            utterance.rate = 1.0;
+            utterance.pitch = 0.9;
+            window.speechSynthesis.speak(utterance);
+        }
 
         function previewImage(event) {
             const file = event.target.files[0];
@@ -81,7 +247,7 @@
             const errorBox = document.getElementById('errorBox');
 
             btn.disabled = true;
-            btn.textContent = 'Анализ... (ждем ответ от ИИ)';
+            btn.textContent = 'Анализ... (ждем ИИ)';
             resultBox.style.display = 'none';
             errorBox.textContent = '';
 
@@ -107,8 +273,13 @@
                         const li = document.createElement('li');
                         const score = Math.round(item.score * 100);
                         const commonName = item.species.commonNames && item.species.commonNames.length > 0 ? item.species.commonNames[0] : 'Русское название не найдено';
-            li.innerHTML = `<strong>${commonName}</strong><br>(лат. <em>${item.species.scientificNameWithoutAuthor}</em>)<br><span style="color:#86efac; font-size: 14px;">Совпадение: ${score}%</span>`;
+                        
+                        li.innerHTML = `<strong>${commonName}</strong><br>(лат. <em>${item.species.scientificNameWithoutAuthor}</em>)<br><span style="color:#86efac; font-size: 14px;">Совпадение: ${score}%</span>`;
                         resultList.appendChild(li);
+                        
+                        if (item === data.results[0]) {
+                            speakPlant(commonName);
+                        }
                     });
                     resultBox.style.display = 'block';
                 } else {
