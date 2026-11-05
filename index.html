@@ -181,6 +181,10 @@
     <div id="resultBox" class="result">
         <h2>Результат анализа</h2>
         <ul id="resultList"></ul>
+        
+        <!-- Новая кнопка озвучки -->
+        <button id="globalSpeakBtn" class="btn" style="display: none; background: transparent; border: 2px solid #4ade80; color: #4ade80; box-shadow: none;" onclick="if(window.topPlantName) speakPlant(window.topPlantName)">🔊 Озвучить результат</button>
+        
         <p style="font-size: 12px; color: #888; margin-top: 20px; text-align: center;">* Результаты предоставлены нейросетью Pl@ntNet.</p>
     </div>
     
@@ -227,11 +231,13 @@
             const resultBox = document.getElementById('resultBox');
             const resultList = document.getElementById('resultList');
             const errorBox = document.getElementById('errorBox');
+            const globalSpeakBtn = document.getElementById('globalSpeakBtn');
 
             btn.disabled = true;
             btn.textContent = 'Анализ... (ждем ИИ)';
             resultBox.style.display = 'none';
             errorBox.textContent = '';
+            window.topPlantName = null; // Сбрасываем старое название
 
             const formData = new FormData();
             formData.append('image', selectedFile);
@@ -251,22 +257,21 @@
 
                 if (data.results && data.results.length > 0) {
                     resultList.innerHTML = '';
-                    data.results.slice(0, 3).forEach(item => {
+                    data.results.slice(0, 3).forEach((item, index) => {
                         const li = document.createElement('li');
                         const score = Math.round(item.score * 100);
                         const commonName = item.species.commonNames && item.species.commonNames.length > 0 ? item.species.commonNames[0] : 'Русское название не найдено';
                         
                         li.innerHTML = `<strong>${commonName}</strong><br>(лат. <em>${item.species.scientificNameWithoutAuthor}</em>)<br><span style="color:#86efac; font-size: 14px;">Совпадение: ${score}%</span>`;
-                        
-                        const speakBtn = document.createElement('button');
-                        speakBtn.innerHTML = '🔊 Озвучить';
-                        speakBtn.style.cssText = 'margin-top: 8px; margin-bottom: 10px; background: #4ade80; color: #000; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; display: block;';
-                        speakBtn.onclick = function() { speakPlant(commonName); };
-                        
-                        li.appendChild(speakBtn);
                         resultList.appendChild(li);
+
+                        // Запоминаем первое (самое точное) растение для озвучки
+                        if (index === 0) {
+                            window.topPlantName = commonName;
+                        }
                     });
                     resultBox.style.display = 'block';
+                    globalSpeakBtn.style.display = 'block'; // Показываем кнопку озвучки
                 } else {
                     errorBox.textContent = 'Не удалось распознать растение. Попробуй другое фото.';
                 }
